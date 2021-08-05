@@ -1,3 +1,14 @@
+// maze.js
+//
+// Coded by Alexandru Istrate
+//
+// Maze generation logic by Daniel Shiffman
+// https://github.com/CodingTrain/website/tree/main/CodingChallenges/CC_010_Maze_DFS/P5
+//
+// Depth-first search
+// Recursive backtracker
+// https://en.wikipedia.org/wiki/Maze_generation_algorithm
+
 function Maze(width, height, mazeWidth) {
     this.mazeWidth = mazeWidth;
     this.cols = floor(width / this.mazeWidth);

@@ -2,8 +2,6 @@
 //
 // Coded by Alexandru Istrate
 //
-// Maze generation logic by Daniel Shiffman
-// https://github.com/CodingTrain/website/tree/main/CodingChallenges/CC_010_Maze_DFS/P5
 
 let mazeWidth = 40;
 let canvasWidth = 600;
