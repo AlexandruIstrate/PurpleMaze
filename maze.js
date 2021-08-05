@@ -7,6 +7,9 @@ function Maze(width, height, mazeWidth) {
     this.stack = [];
 
     this.isDone = false;
+    this.isGameOver = false;
+
+    this.lastVisited = [];
 
     this.setup = function () {
         for (let j = 0; j < this.rows; j++) {
@@ -17,6 +20,11 @@ function Maze(width, height, mazeWidth) {
         }
 
         this.current = this.grid[0];
+
+        this.lastVisited = this.grid;
+
+        // Set the start
+        this.grid[0].isStart = true;
     };
 
     this.draw = function () {
@@ -47,6 +55,12 @@ function Maze(width, height, mazeWidth) {
             // STEP 3: Clear the walls to connect with the other parts of the maze
             removeWalls(this.current, next);
 
+            if (this.lastVisited.length > 1) {
+                this.lastVisited = this.lastVisited.filter(w => !w.visited);
+            } else {
+                this.lastVisited[0].isEnd = true;
+            }
+
             // STEP 4: Advance the iterator
             this.current = next;
         } else if (this.stack.length > 0) {
@@ -60,34 +74,38 @@ function Maze(width, height, mazeWidth) {
         switch (direction) {
             case LEFT_ARROW:
                 if (!this.current.walls[3]) {
-                    console.log("Left");
+                    // console.log("Left");
                     this.current = this.grid[index(this.current.i - 1, this.current.j, this.rows, this.cols)]
                 }
                 break;
 
             case RIGHT_ARROW:
                 if (!this.current.walls[1]) {
-                    console.log("Right");
+                    // console.log("Right");
                     this.current = this.grid[index(this.current.i + 1, this.current.j, this.rows, this.cols)]
                 }
                 break;
 
             case UP_ARROW:
                 if (!this.current.walls[0]) {
-                    console.log("Up");
+                    // console.log("Up");
                     this.current = this.grid[index(this.current.i, this.current.j - 1, this.rows, this.cols)]
                 }
                 break;
 
             case DOWN_ARROW:
                 if (!this.current.walls[2]) {
-                    console.log("Down");
+                    // console.log("Down");
                     this.current = this.grid[index(this.current.i, this.current.j + 1, this.rows, this.cols)]
                 }
                 break;
 
             default:
                 return false;
+        }
+
+        if (this.current.isEnd) {
+            this.isGameOver = true;
         }
     }
 

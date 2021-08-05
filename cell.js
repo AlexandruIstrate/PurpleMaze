@@ -15,7 +15,10 @@ function Cell(i, j) {
   this.walls = [true, true, true, true];
   this.visited = false;
 
-  this.checkNeighbors = function(grid, rows, cols) {
+  this.isStart = false;
+  this.isEnd = false;
+
+  this.checkNeighbors = function (grid, rows, cols) {
     let neighbors = [];
 
     let top = grid[index(i, j - 1, rows, cols)];
@@ -43,7 +46,7 @@ function Cell(i, j) {
       return undefined;
     }
   };
-  this.highlight = function() {
+  this.highlight = function () {
     let x = this.i * mazeWidth;
     let y = this.j * mazeWidth;
     noStroke();
@@ -51,7 +54,7 @@ function Cell(i, j) {
     rect(x, y, mazeWidth, mazeWidth);
   };
 
-  this.show = function() {
+  this.show = function () {
     let x = this.i * mazeWidth;
     let y = this.j * mazeWidth;
 
@@ -75,7 +78,15 @@ function Cell(i, j) {
 
     if (this.visited) {
       noStroke();
-      fill(255, 0, 255, 100);
+
+      if (this.isStart) {
+        fill(200, 200, 200, 100);
+      } else if (this.isEnd) {
+        fill(0, 255, 0, 100);
+      } else {
+        fill(255, 0, 255, 100);
+      }
+
       rect(x, y, mazeWidth, mazeWidth);
     }
   };

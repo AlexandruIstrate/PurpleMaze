@@ -6,19 +6,17 @@
 // https://github.com/CodingTrain/website/tree/main/CodingChallenges/CC_010_Maze_DFS/P5
 
 let mazeWidth = 40;
-let grid = [];
-let current;
-let stack = [];
-
+let canvasWidth = 600;
+let canvasHeight = 600;
 let maze;
 
 function setup() {
     console.log("Setting up...")
 
     // Perform setup
-    createCanvas(600, 600);
+    createCanvas(canvasWidth, canvasHeight);
 
-    maze = new Maze(600, 600, mazeWidth)
+    maze = new Maze(canvasWidth, canvasHeight, mazeWidth)
     maze.setup();
 
     console.log("Setup done")
@@ -26,11 +24,19 @@ function setup() {
 
 function draw() {
     maze.draw();
+
+    if (!maze.isDone) {
+        presentText("Generating Maze...");
+    } else if (maze.isGameOver) {
+        presentText("You Won!");
+    }
 }
 
 function keyPressed() {
     if (maze.isDone) {
-        maze.moveCursor(keyCode)
+        if (!maze.isGameOver) {
+            maze.moveCursor(keyCode)
+        }
     }
 }
 
@@ -39,9 +45,21 @@ function index(i, j, cols, rows) {
         return -1;
     }
 
-    if (i > cols - 1 || j > rows - 1)  {
+    if (i > cols - 1 || j > rows - 1) {
         return -1;
     }
 
     return i + j * cols;
+}
+
+function presentText(displayText) {
+    // Set a blurred background
+    fill(255, 255, 255, 100);
+    rect(0, 0, canvasWidth, canvasHeight)
+
+    // Write the text that tells you to wait
+    textSize(32);
+    textAlign(CENTER);
+    fill(255);
+    text(displayText, canvasWidth / 2, canvasHeight / 2);
 }
