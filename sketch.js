@@ -17,6 +17,9 @@ function setup() {
     maze = new Maze(canvasWidth, canvasHeight, mazeWidth)
     maze.setup();
 
+    var resetButton = createButton("Reset");
+    resetButton.mousePressed(resetSketch);
+
     console.log("Setup done")
 }
 
@@ -36,6 +39,11 @@ function keyPressed() {
             maze.moveCursor(keyCode)
         }
     }
+}
+
+function resetSketch() {
+    maze = new Maze(canvasWidth, canvasHeight, mazeWidth)
+    maze.setup();
 }
 
 function index(i, j, cols, rows) {
