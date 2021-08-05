@@ -18,7 +18,6 @@ function setup() {
     createCanvas(canvasWidth, canvasHeight);
 
     maze = new Maze(canvasWidth, canvasHeight, mazeWidth)
-    maze.sketch = this;
     maze.setup();
 
     var resetButton = createButton("Reset");
@@ -58,7 +57,6 @@ function keyPressed() {
 
 function resetSketch() {
     maze = new Maze(canvasWidth, canvasHeight, mazeWidth)
-    maze.sketch = this;
     maze.setup();
 
     // Reset the timer

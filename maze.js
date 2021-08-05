@@ -23,8 +23,6 @@ function Maze(width, height, mazeWidth) {
 
     this.lastVisited = [];
 
-    this.sketch = null;
-
     this.setup = function () {
         for (let j = 0; j < this.rows; j++) {
             for (let i = 0; i < this.cols; i++) {
@@ -135,7 +133,7 @@ function Maze(width, height, mazeWidth) {
         if (this.current.hasGold) {
             // Remove the old gold
             this.current.hasGold = false;
-            this.sketch.gotGold();
+            gotGold();
         }
 
         return true;
