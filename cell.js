@@ -15,13 +15,13 @@ function Cell(i, j) {
   this.walls = [true, true, true, true];
   this.visited = false;
 
-  this.checkNeighbors = function() {
+  this.checkNeighbors = function(grid, rows, cols) {
     let neighbors = [];
 
-    let top = grid[index(i, j - 1)];
-    let right = grid[index(i + 1, j)];
-    let bottom = grid[index(i, j + 1)];
-    let left = grid[index(i - 1, j)];
+    let top = grid[index(i, j - 1, rows, cols)];
+    let right = grid[index(i + 1, j, rows, cols)];
+    let bottom = grid[index(i, j + 1, rows, cols)];
+    let left = grid[index(i - 1, j, rows, cols)];
 
     if (top && !top.visited) {
       neighbors.push(top);
@@ -68,7 +68,7 @@ function Cell(i, j) {
     if (this.walls[2]) {
       line(x + mazeWidth, y + mazeWidth, x, y + mazeWidth);
     }
-    
+
     if (this.walls[3]) {
       line(x, y + mazeWidth, x, y);
     }
