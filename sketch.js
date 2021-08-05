@@ -8,6 +8,9 @@ let canvasWidth = 600;
 let canvasHeight = 600;
 let maze;
 
+let timerInitialValue = 10
+var timerValue = timerInitialValue
+
 function setup() {
     console.log("Setting up...")
 
@@ -15,10 +18,14 @@ function setup() {
     createCanvas(canvasWidth, canvasHeight);
 
     maze = new Maze(canvasWidth, canvasHeight, mazeWidth)
+    maze.sketch = this;
     maze.setup();
 
     var resetButton = createButton("Reset");
     resetButton.mousePressed(resetSketch);
+
+    // Configure timer
+    setInterval(timerInterval, 1000);
 
     console.log("Setup done")
 }
@@ -29,8 +36,16 @@ function draw() {
     if (!maze.isDone) {
         presentText("Generating Maze...");
     } else if (maze.isGameOver) {
-        presentText("You Won!");
+        if (maze.won) {
+            presentText("You Won!");
+        } else {
+            presentText("You Lost!");
+        }
     }
+
+    // Draw timer
+    fill(0, 255, 0);
+    rect(0, canvasHeight - 5, canvasWidth * timerValue / timerInitialValue, 5)
 }
 
 function keyPressed() {
@@ -43,7 +58,29 @@ function keyPressed() {
 
 function resetSketch() {
     maze = new Maze(canvasWidth, canvasHeight, mazeWidth)
+    maze.sketch = this;
     maze.setup();
+
+    // Reset the timer
+    timerValue = timerInitialValue;
+}
+
+function timerInterval() {
+    if (maze.isDone) {
+        if (!maze.isGameOver) {
+            if (timerValue > 0) {
+                timerValue--;
+            } else {
+                maze.isGameOver = true;
+                maze.won = false;
+            }
+        }
+    }
+}
+
+function gotGold() {
+    // Reset the timer when we pick up gold
+    timerValue = timerInitialValue;
 }
 
 function index(i, j, cols, rows) {

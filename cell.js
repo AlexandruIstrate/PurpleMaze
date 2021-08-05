@@ -18,6 +18,8 @@ function Cell(i, j) {
   this.isStart = false;
   this.isEnd = false;
 
+  this.hasGold = false;
+
   this.checkNeighbors = function (grid, rows, cols) {
     let neighbors = [];
 
@@ -88,6 +90,11 @@ function Cell(i, j) {
       }
 
       rect(x, y, mazeWidth, mazeWidth);
+
+      if (this.hasGold) {
+        fill(200, 200, 0);
+        rect(x + 10, y + 10, mazeWidth - 20, mazeWidth - 20);
+      }
     }
   };
 }
